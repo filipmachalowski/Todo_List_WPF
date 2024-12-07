@@ -3,10 +3,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Todo_List_WPF.Models;
+using Todo_List_WPF.Services;
 using Todo_List_WPF.Views;
 
 namespace Todo_List_WPF.ViewModels
 {
+    
     public class MainViewModel : ViewModelBase
     {
         private TodoItem _selectedItem;
@@ -65,6 +67,7 @@ namespace Todo_List_WPF.ViewModels
             };
 
             addTaskDialog.ShowDialog();
+            App.NotificationService.AdjustTimerForClosestTask();
         }
 
         private void EditTask()
@@ -89,6 +92,7 @@ namespace Todo_List_WPF.ViewModels
             };
 
             addTaskDialog.ShowDialog();
+            App.NotificationService.AdjustTimerForClosestTask();
         }
 
         private void RemoveTask()
@@ -97,6 +101,7 @@ namespace Todo_List_WPF.ViewModels
             db.TodoItems.Remove(SelectedItem);
             db.SaveChanges();
             LoadTasksForDate();
+            App.NotificationService.AdjustTimerForClosestTask();
         }
     }
 }
