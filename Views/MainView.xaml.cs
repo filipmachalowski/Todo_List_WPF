@@ -34,5 +34,33 @@ namespace Todo_List_WPF.Views
                 }
             }
         }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            e.Cancel = true;
+            HideAppToTray();
+        }
+
+        private void OnNotifyIconLeftClick(object sender, RoutedEventArgs e)
+        {
+            ShowAppFromTray(sender, e);
+        }
+
+        private void ShowAppFromTray(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Visible;
+            this.WindowState = WindowState.Normal;
+            this.Activate();
+        }
+
+        private void ExitApp(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void HideAppToTray()
+        {
+            this.Visibility = Visibility.Hidden;
+        }
     }
 }
