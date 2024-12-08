@@ -15,14 +15,15 @@ namespace Todo_List_WPF.Views
             InitializeComponent();
             Loaded += (sender, args) =>
             {
-                if (Wpf.Ui.Appearance.ApplicationThemeManager.GetSystemTheme().ToString() == "Dark") {
+                if (Wpf.Ui.Appearance.ApplicationThemeManager.GetSystemTheme().ToString() == "Dark")
+                {
                     Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Dark, Wpf.Ui.Controls.WindowBackdropType.Auto, true);
                 }
                 else
                 {
                     Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Light, Wpf.Ui.Controls.WindowBackdropType.Auto, true);
                 }
-                
+
                 Wpf.Ui.Appearance.SystemThemeWatcher.Watch(
                     this,                                    // Window class
                     Wpf.Ui.Controls.WindowBackdropType.Auto,  // Background type

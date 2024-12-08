@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using Todo_List_WPF.Models;
 using Todo_List_WPF.Views;
@@ -110,7 +109,7 @@ namespace Todo_List_WPF.ViewModels
                 }
                 else
                 {
-                   // Debug.WriteLine("Task not found in database");
+                    // Debug.WriteLine("Task not found in database");
                 }
 
                 LoadTasksForDate();

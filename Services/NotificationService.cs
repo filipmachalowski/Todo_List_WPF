@@ -59,7 +59,7 @@ namespace Todo_List_WPF.Services
 
                     // Find the closest upcoming task's notify time
                     _nextTask = db.TodoItems
-                        .Where(t => t.NotificationMinutesBefore>0)
+                        .Where(t => t.NotificationMinutesBefore > 0)
                         .OrderBy(t => t.DueTime.AddMinutes(-t.NotificationMinutesBefore))
                         .FirstOrDefault(t => t.DueTime.AddMinutes(-t.NotificationMinutesBefore) > now);
 
