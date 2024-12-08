@@ -173,7 +173,7 @@ namespace Todo_List_WPF.ViewModels
                 newTask.NotificationMinutesBefore = 0;
             }
 
-            if (DueTime.AddMinutes(-newTask.NotificationMinutesBefore) <= DateTime.Now)
+            if (IsNotifyON && DueTime.AddMinutes(-newTask.NotificationMinutesBefore) <= DateTime.Now)
             {
                 ShowErrorDialog("Notification cannot be in past !");
                 return; // Do not save if Notification is in past

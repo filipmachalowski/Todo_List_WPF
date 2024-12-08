@@ -28,6 +28,7 @@ namespace Todo_List_WPF.Services
                     // Get the next upcoming task with a notification
                     _nextTask = db.TodoItems
                         .Where(t => t.NotificationMinutesBefore > 0)
+                        .Where(t => t.IsCompleted==false)
                         .OrderBy(t => t.DueTime.AddMinutes(-t.NotificationMinutesBefore))
                         .FirstOrDefault(t => t.DueTime.AddMinutes(-t.NotificationMinutesBefore) > now);
 
