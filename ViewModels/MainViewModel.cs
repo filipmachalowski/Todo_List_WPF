@@ -73,19 +73,22 @@ namespace Todo_List_WPF.ViewModels
 
         private void EditTask()
         {
+            Debug.WriteLine("Launched Edit");
             if (SelectedItem == null) return;
 
             var addTaskDialog = new AddTaskDialog();
             var dialogViewModel = addTaskDialog.DataContext as AddTaskDialogViewModel;
 
+            // Pre-populate the dialog with existing task data, including IsCompleted
             dialogViewModel.Title = SelectedItem.Title;
             dialogViewModel.Description = SelectedItem.Description;
             dialogViewModel.DueTime = SelectedItem.DueTime;
             dialogViewModel.NotificationMinutesBefore = SelectedItem.NotificationMinutesBefore;
+            dialogViewModel.IsCompleted = SelectedItem.IsCompleted;  // Add this line to bind IsCompleted
 
             dialogViewModel.OnTaskSaved = updatedTask =>
             {
-                // Update the existing task with new data
+                // Update the existing task in the database with the updated values
                 using var db = new TodoContext();
                 var taskToUpdate = db.TodoItems.FirstOrDefault(t => t.Id == SelectedItem.Id);
 
@@ -95,12 +98,14 @@ namespace Todo_List_WPF.ViewModels
                     taskToUpdate.Description = updatedTask.Description;
                     taskToUpdate.DueTime = updatedTask.DueTime;
                     taskToUpdate.NotificationMinutesBefore = updatedTask.NotificationMinutesBefore;
+                    taskToUpdate.IsCompleted = updatedTask.IsCompleted; // Save the updated completion status
 
                     db.SaveChanges();
+                    Debug.WriteLine("Task updated in database");
                 }
                 else
                 {
-                    Debug.WriteLine("Task not found in database");
+                   // Debug.WriteLine("Task not found in database");
                 }
 
                 LoadTasksForDate();
@@ -117,6 +122,20 @@ namespace Todo_List_WPF.ViewModels
             db.SaveChanges();
             LoadTasksForDate();
             App.NotificationService.AdjustTimerForClosestTask();
+        }
+
+        // This method will be called when the checkbox state changes
+        public void UpdateTaskCompletionStatus(TodoItem task)
+        {
+            using (var db = new TodoContext())
+            {
+                var existingTask = db.TodoItems.SingleOrDefault(t => t.Id == task.Id);
+                if (existingTask != null)
+                {
+                    existingTask.IsCompleted = task.IsCompleted;
+                    db.SaveChanges();
+                }
+            }
         }
     }
 }

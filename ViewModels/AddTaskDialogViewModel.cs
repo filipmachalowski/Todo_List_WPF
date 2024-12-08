@@ -12,7 +12,13 @@ namespace Todo_List_WPF.ViewModels
         private string _description;
         private DateTime _dueTime;
         private int _notificationMinutesBefore;
+        private bool _isCompleted;
 
+        public bool IsCompleted
+        {
+            get => _isCompleted;
+            set => SetProperty(ref _isCompleted, value);
+        }
         public string Title
         {
             get => _title;
@@ -104,7 +110,8 @@ namespace Todo_List_WPF.ViewModels
                 Title = Title,
                 Description = Description,
                 DueTime = DueTime,
-                NotificationMinutesBefore = NotificationMinutesBefore
+                NotificationMinutesBefore = NotificationMinutesBefore,
+                IsCompleted = IsCompleted
             };
 
             // Trigger the save action (passing the task)

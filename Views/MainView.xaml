@@ -31,12 +31,23 @@
             <Button Content="Remove" Command="{Binding RemoveTaskCommand}" Width="75" Margin="5" />
         </StackPanel>
 
-        <ListBox ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Title" Grid.Row="1" Margin="5" />
+        <ListBox ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedItem}" Grid.Row="1" Margin="5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox 
+                            IsChecked="{Binding IsCompleted, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" 
+                            VerticalAlignment="Center" 
+                            Margin="5"
+                            Checked="OnTaskCompletionChanged"
+                            Unchecked="OnTaskCompletionChanged"/>
+                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="5" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-
-
-
-         <tray:NotifyIcon Icon="pack://application:,,,/Resources/list.ico"
+        <tray:NotifyIcon Icon="pack://application:,,,/Resources/list.ico"
                          TooltipText="TODO List"
                          LeftClick="OnNotifyIconLeftClick">
             <tray:NotifyIcon.Menu>

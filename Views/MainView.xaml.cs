@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Todo_List_WPF.Models;
+using Todo_List_WPF.ViewModels;
 
 namespace Todo_List_WPF.Views
 {
@@ -79,6 +81,20 @@ namespace Todo_List_WPF.Views
         private void HideAppToTray()
         {
             this.Visibility = Visibility.Hidden;
+        }
+
+
+        // Event handler for Checked and Unchecked events
+        private void OnTaskCompletionChanged(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            var todoItem = checkBox?.DataContext as TodoItem;
+            if (todoItem != null)
+            {
+                // Get the ViewModel and update the task
+                var viewModel = DataContext as MainViewModel;
+                viewModel?.UpdateTaskCompletionStatus(todoItem);
+            }
         }
     }
 }
