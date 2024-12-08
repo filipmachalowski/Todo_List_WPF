@@ -138,13 +138,14 @@ namespace Todo_List_WPF.ViewModels
             // Check if Title or Description is empty
             if (string.IsNullOrWhiteSpace(Title))
             {
-                MessageBox.Show("Title cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                ShowErrorDialog("Title cannot be empty !");
+                return; // Do not save if Title is empty
             }
+
             if (string.IsNullOrWhiteSpace(Description))
             {
-                MessageBox.Show("Description cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                ShowErrorDialog("Description cannot be empty !");
+                return; // Do not save if Description is empty
             }
 
             var newTask = new TodoItem
@@ -176,6 +177,12 @@ namespace Todo_List_WPF.ViewModels
         {
             // Close the dialog without saving
             (App.Current.MainWindow as MainView)?.CloseAddTaskDialog();
+        }
+        private void ShowErrorDialog(string errorMessage)
+        {
+            var errorDialog = new CustomErrorDialog(errorMessage);
+            errorDialog.Owner = Application.Current.MainWindow; // To center the error dialog
+            errorDialog.ShowDialog();
         }
     }
 }
