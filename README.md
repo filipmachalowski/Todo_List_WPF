@@ -21,6 +21,14 @@ A simple TODO list application built with **C#**, **.NET 8**, **MVVM**, **WPF**,
 
 You can now use the application to manage your tasks, add new tasks, mark them as complete, and manage reminders.
 
+## Showcase
+
+
+https://github.com/user-attachments/assets/f530a1d5-9278-4659-a2e9-083211431365
+
+
+
+
 ## Attributions and licencing
 ### This project uses:
 
