@@ -6,10 +6,15 @@
     <Nullable>annotations</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Appicon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\list.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Appicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
