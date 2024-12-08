@@ -88,7 +88,7 @@ namespace Todo_List_WPF.ViewModels
             dialogViewModel.DueTime = SelectedItem.DueTime;
             dialogViewModel.NotificationMinutesBefore = SelectedItem.NotificationMinutesBefore;
             dialogViewModel.IsCompleted = SelectedItem.IsCompleted;  // Add this line to bind IsCompleted
-            dialogViewModel.IsNotifyON = SelectedItem.NotificationMinutesBefore > 0;
+            dialogViewModel.IsNotifyON = (SelectedItem.NotificationMinutesBefore > 0 && SelectedItem.DueTime.AddMinutes(-SelectedItem.NotificationMinutesBefore) > DateTime.Now);
             (dialogViewModel as AddTaskDialogViewModel).PastCheckboxUpdate();
 
             dialogViewModel.OnTaskSaved = updatedTask =>

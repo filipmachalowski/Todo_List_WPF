@@ -5,6 +5,8 @@
         Title="Error"
         Height="150"
         Width="300"
+        ResizeMode="NoResize"
+        Icon="/Resources/list.ico"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ApplicationBackgroundBrush}"
         ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"

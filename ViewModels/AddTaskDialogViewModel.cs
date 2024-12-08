@@ -55,7 +55,7 @@ namespace Todo_List_WPF.ViewModels
 
         public void PastCheckboxUpdate()
         {
-            if (DueTime < DateTime.Now)
+            if (DueTime < DateTime.Now.AddMinutes(1))
             {
                 IsNotifyON = false;
                 IsNotifyONEnabled = false;
@@ -159,11 +159,24 @@ namespace Todo_List_WPF.ViewModels
             // Set NotificationMinutesBefore based on IsNotifyON
             if (IsNotifyON)
             {
-                newTask.NotificationMinutesBefore = NotificationMinutesBefore;
+                if (NotificationMinutesBefore == 0)
+                {
+                    newTask.NotificationMinutesBefore = 1;
+                }
+                else
+                {
+                    newTask.NotificationMinutesBefore = NotificationMinutesBefore;
+                }
             }
             else
             {
                 newTask.NotificationMinutesBefore = 0;
+            }
+
+            if (DueTime.AddMinutes(-newTask.NotificationMinutesBefore) <= DateTime.Now)
+            {
+                ShowErrorDialog("Notification cannot be in past !");
+                return; // Do not save if Notification is in past
             }
 
             // Trigger the save action (passing the task)
