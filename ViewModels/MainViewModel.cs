@@ -70,7 +70,6 @@ namespace Todo_List_WPF.ViewModels
 
         private void EditTask()
         {
-            Debug.WriteLine("Launched Edit");
             if (SelectedItem == null) return;
 
             var addTaskDialog = new AddTaskDialog();
@@ -82,6 +81,7 @@ namespace Todo_List_WPF.ViewModels
             dialogViewModel.DueTime = SelectedItem.DueTime;
             dialogViewModel.NotificationMinutesBefore = SelectedItem.NotificationMinutesBefore;
             dialogViewModel.IsCompleted = SelectedItem.IsCompleted;  // Add this line to bind IsCompleted
+            dialogViewModel.IsNotifyON = SelectedItem.NotificationMinutesBefore > 0;
 
             dialogViewModel.OnTaskSaved = updatedTask =>
             {
@@ -98,7 +98,6 @@ namespace Todo_List_WPF.ViewModels
                     taskToUpdate.IsCompleted = updatedTask.IsCompleted; // Save the updated completion status
 
                     db.SaveChanges();
-                    Debug.WriteLine("Task updated in database");
                 }
                 else
                 {

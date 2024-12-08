@@ -14,6 +14,10 @@
     <Window.DataContext>
         <vm:AddTaskDialogViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
+
 
     <Grid Margin="10">
         <StackPanel>
@@ -35,14 +39,15 @@
                     <TextBlock Text=" : " VerticalAlignment="Center" />
                     <ui:NumberBox SpinButtonPlacementMode="Hidden" Width="60" Value="{Binding Minute,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" MaxDecimalPlaces="0" Maximum="59" Minimum="0" ClearButtonEnabled="False" />
                 </StackPanel>
+            <!-- Notify Checkbox -->
             <StackPanel Orientation="Horizontal">
-                <CheckBox Margin="5,0,0,0"/>
+                <CheckBox x:Name="NotifyCheckBox" Margin="5,0,0,0" IsChecked="{Binding IsNotifyON}"/>
                 <Label Content="Notify" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             </StackPanel>
 
             <!-- Notification Time (optional) -->
-            <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding NotificationMinutesBefore}" Margin="5" VerticalAlignment="Center" />
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsChecked, ElementName=NotifyCheckBox, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ui:NumberBox Width="Auto" Value="{Binding NotificationMinutesBefore,UpdateSourceTrigger=PropertyChanged}" MaxWidth="263" Maximum="20000000" MaxDecimalPlaces="0" Minimum="1" ClearButtonEnabled="False" />
                 <Label Content="Minutes Before" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             </StackPanel>
 
@@ -52,5 +57,7 @@
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Width="75" Margin="5"/>
             </StackPanel>
         </StackPanel>
+    
+    
     </Grid>
 </Window>

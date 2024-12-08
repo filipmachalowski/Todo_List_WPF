@@ -12,7 +12,13 @@ namespace Todo_List_WPF.ViewModels
         private DateTime _dueTime;
         private int _notificationMinutesBefore;
         private bool _isCompleted;
+        private bool _isNotifyON;
 
+        public bool IsNotifyON
+        {
+            get => _isNotifyON;
+            set => SetProperty(ref _isNotifyON, value);
+        }
         public bool IsCompleted
         {
             get => _isCompleted;
@@ -98,6 +104,7 @@ namespace Todo_List_WPF.ViewModels
         public AddTaskDialogViewModel()
         {
             DueTime = DateTime.Now;
+            IsNotifyON = NotificationMinutesBefore > 0;
             SaveCommand = new RelayCommand(SaveTask);
             CancelCommand = new RelayCommand(CancelTask);
         }
@@ -109,9 +116,18 @@ namespace Todo_List_WPF.ViewModels
                 Title = Title,
                 Description = Description,
                 DueTime = DueTime,
-                NotificationMinutesBefore = NotificationMinutesBefore,
                 IsCompleted = IsCompleted
             };
+
+            // Set NotificationMinutesBefore based on IsNotifyON
+            if (IsNotifyON)
+            {
+                newTask.NotificationMinutesBefore = NotificationMinutesBefore;
+            }
+            else
+            {
+                newTask.NotificationMinutesBefore = 0;
+            }
 
             // Trigger the save action (passing the task)
             OnTaskSaved?.Invoke(newTask);
