@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using Todo_List_WPF.Models;
 using Todo_List_WPF.ViewModels;
@@ -10,6 +12,7 @@ namespace Todo_List_WPF.Views
     /// </summary>
     public partial class MainView : Window
     {
+        bool firsthide = true;
         public MainView()
         {
             InitializeComponent();
@@ -70,6 +73,16 @@ namespace Todo_List_WPF.Views
         private void HideAppToTray()
         {
             this.Visibility = Visibility.Hidden;
+            
+            if (firsthide)
+            {
+                new ToastContentBuilder()
+                    .AddText("Todo_List_WPF")
+                    .AddText("This app is still running in tray")
+                    .Show();
+                firsthide = false;
+            }
+            
         }
 
 

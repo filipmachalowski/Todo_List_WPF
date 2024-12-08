@@ -10,14 +10,14 @@ namespace Todo_List_WPF
         // Override OnStartup to ensure database is created/migrated
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Ensure the database is created and migrations are applied
+            TodoContext.EnsureDatabaseCreated();
             base.OnStartup(e);
+
 
             // Initialize and start the notification service
             NotificationService = new NotificationService();
             NotificationService.Start();
-
-            // Ensure the database is created and migrations are applied
-            TodoContext.EnsureDatabaseCreated();
 
         }
         protected override void OnExit(ExitEventArgs e)
