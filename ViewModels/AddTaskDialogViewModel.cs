@@ -14,6 +14,7 @@ namespace Todo_List_WPF.ViewModels
         private bool _isCompleted;
         private bool _isNotifyON;
 
+        public bool IsNotifyONEnabled { get; private set; } = true;
         public bool IsNotifyON
         {
             get => _isNotifyON;
@@ -46,9 +47,31 @@ namespace Todo_List_WPF.ViewModels
                     // Recalculate Hour and Minute when DueTime changes
                     OnPropertyChanged(nameof(Hour));
                     OnPropertyChanged(nameof(Minute));
+                    PastCheckboxUpdate();
                 }
             }
         }
+
+        public void PastCheckboxUpdate()
+        {
+            if (DueTime < DateTime.Now)
+            {
+                IsNotifyON = false;
+                IsNotifyONEnabled = false;
+                NotificationMinutesBefore = 0;
+
+                // Trigger property changed for the new properties
+                OnPropertyChanged(nameof(IsNotifyON));
+                OnPropertyChanged(nameof(IsNotifyONEnabled));
+                OnPropertyChanged(nameof(NotificationMinutesBefore));
+            }
+            else
+            {
+                IsNotifyONEnabled = true;
+                OnPropertyChanged(nameof(IsNotifyONEnabled));
+            }
+        }
+
         public int Hour
         {
             get => DueTime.Hour;

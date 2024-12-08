@@ -41,7 +41,7 @@
                 </StackPanel>
             <!-- Notify Checkbox -->
             <StackPanel Orientation="Horizontal">
-                <CheckBox x:Name="NotifyCheckBox" Margin="5,0,0,0" IsChecked="{Binding IsNotifyON}"/>
+                <CheckBox x:Name="NotifyCheckBox" Margin="5,0,0,0" IsChecked="{Binding IsNotifyON}" IsEnabled="{Binding IsNotifyONEnabled}"/>
                 <Label Content="Notify" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             </StackPanel>
 
