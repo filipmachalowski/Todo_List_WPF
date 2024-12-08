@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows.Input;
 using Todo_List_WPF.Models;
-using Todo_List_WPF.Services;
 using Todo_List_WPF.Views;
 
 namespace Todo_List_WPF.ViewModels
 {
-    
+
     public class MainViewModel : ViewModelBase
     {
         private TodoItem _selectedItem;

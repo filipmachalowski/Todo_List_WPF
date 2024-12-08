@@ -1,9 +1,5 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications; // For Toast notifications
-using System;
-using System.Linq;
-using System.Threading;
 using Todo_List_WPF.Models;
-using System.Diagnostics;
 
 namespace Todo_List_WPF.Services
 {

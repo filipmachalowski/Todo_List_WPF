@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.IO;
 
 namespace Todo_List_WPF.Models

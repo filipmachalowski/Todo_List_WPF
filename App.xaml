@@ -1,9 +1,8 @@
 ﻿<Application x:Class="Todo_List_WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Todo_List_WPF"
-             StartupUri="Views/MainView.xaml"
-             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+             StartupUri="Views/MainView.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
