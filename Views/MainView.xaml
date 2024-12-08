@@ -6,6 +6,7 @@
         xmlns:vm="clr-namespace:Todo_List_WPF.ViewModels"
         xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:utils="clr-namespace:Todo_List_WPF.Utils"
         mc:Ignorable="d"
         Icon="pack://application:,,,/Resources/list.ico"
         ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
@@ -21,6 +22,10 @@
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
+    
+    <Window.Resources>
+        <utils:TaskNotificationVisibilityConverter x:Key="TaskNotificationVisibilityConverter" />
+    </Window.Resources>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -83,10 +88,12 @@
                             <!-- CheckBox -->
                             <CheckBox IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       VerticalAlignment="Top"
-                                      Margin="5"
+                                      Margin="5,5,0,5"
                                       Checked="OnTaskCompletionChanged"
                                       Unchecked="OnTaskCompletionChanged" />
-
+                            <!-- Notification Symbol -->
+                            <ui:SymbolIcon Symbol="Alert48"
+                                           Visibility="{Binding ., Converter={StaticResource TaskNotificationVisibilityConverter}}" />
                             <!-- Title and Description -->
                             <StackPanel Margin="5,0,0,0">
                                 <!-- Task Title -->
@@ -95,7 +102,7 @@
                                            FontWeight="Bold"
                                            FontSize="14"
                                            TextTrimming="CharacterEllipsis"
-                                           MaxWidth="460"
+                                           MaxWidth="445"
                                            Margin="0,0,0,2" />
 
                                 <!-- Task Description -->
@@ -104,13 +111,14 @@
                                            TextTrimming="CharacterEllipsis"
                                            TextWrapping="WrapWithOverflow"
                                            MaxHeight="30"
-                                           MaxWidth="460" />
+                                           MaxWidth="445" />
                                 <TextBlock Text="{Binding DueTime}"
                                            FontSize="12"
                                            TextTrimming="CharacterEllipsis"
                                            TextWrapping="WrapWithOverflow"
                                            MaxHeight="30"
-                                           MaxWidth="460" />
+                                           MaxWidth="445" />
+
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

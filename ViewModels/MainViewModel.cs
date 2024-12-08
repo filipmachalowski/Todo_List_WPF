@@ -141,5 +141,13 @@ namespace Todo_List_WPF.ViewModels
                 }
             }
         }
+
+        public bool IsNotificationPendingForTask(TodoItem task)
+        {
+            return task.NotificationMinutesBefore > 0
+                   && !task.IsCompleted
+                   && task.DueTime.AddMinutes(-task.NotificationMinutesBefore) > DateTime.Now
+                   && task.DueTime > DateTime.Now;
+        }
     }
 }
