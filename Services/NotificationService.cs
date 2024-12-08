@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using Todo_List_WPF.Models;
+using System.Diagnostics;
 
 namespace Todo_List_WPF.Services
 {
@@ -62,14 +63,14 @@ namespace Todo_List_WPF.Services
 
                     // Find the closest upcoming task's notify time
                     _nextTask = db.TodoItems
-                        .Where(t => t.DueTime.HasValue)
-                        .OrderBy(t => t.DueTime.Value.AddMinutes(-t.NotificationMinutesBefore))
-                        .FirstOrDefault(t => t.DueTime.Value.AddMinutes(-t.NotificationMinutesBefore) > now);
+                        .Where(t => t.NotificationMinutesBefore>0)
+                        .OrderBy(t => t.DueTime.AddMinutes(-t.NotificationMinutesBefore))
+                        .FirstOrDefault(t => t.DueTime.AddMinutes(-t.NotificationMinutesBefore) > now);
 
                     if (_nextTask != null)
                     {
                         // Update the next notify time
-                        _nextNotifyTime = _nextTask.DueTime.Value.AddMinutes(-_nextTask.NotificationMinutesBefore);
+                        _nextNotifyTime = _nextTask.DueTime.AddMinutes(-_nextTask.NotificationMinutesBefore);
 
                         var nextCheckInterval = _nextNotifyTime.Value - now;
 

@@ -20,7 +20,7 @@ namespace Todo_List_WPF.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DueTime = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    DueTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     NotificationMinutesBefore = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

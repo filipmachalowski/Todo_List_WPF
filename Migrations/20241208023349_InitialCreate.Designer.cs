@@ -11,7 +11,7 @@ using Todo_List_WPF.Models;
 namespace Todo_List_WPF.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20241207005005_InitialCreate")]
+    [Migration("20241208023349_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -30,7 +30,7 @@ namespace Todo_List_WPF.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("DueTime")
+                    b.Property<DateTime>("DueTime")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsCompleted")

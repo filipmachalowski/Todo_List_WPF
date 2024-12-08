@@ -27,7 +27,7 @@ namespace Todo_List_WPF.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("DueTime")
+                    b.Property<DateTime>("DueTime")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsCompleted")

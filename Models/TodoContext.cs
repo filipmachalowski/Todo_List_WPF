@@ -30,7 +30,7 @@ namespace Todo_List_WPF.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsCompleted { get; set; }
-        public DateTime? DueTime { get; set; }
+        public DateTime DueTime { get; set; }
         public int NotificationMinutesBefore { get; set; }
     }
 }

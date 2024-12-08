@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using Todo_List_WPF.Models;
@@ -48,7 +49,7 @@ namespace Todo_List_WPF.ViewModels
         {
             using var db = new TodoContext();
             Tasks.Clear();
-            var tasksForDate = db.TodoItems.Where(t => t.DueTime.HasValue && t.DueTime.Value.Date == SelectedDate.Date).ToList();
+            var tasksForDate = db.TodoItems.Where(t => t.DueTime.Date == SelectedDate.Date).ToList();
             foreach (var task in tasksForDate)
                 Tasks.Add(task);
         }
@@ -84,10 +85,24 @@ namespace Todo_List_WPF.ViewModels
 
             dialogViewModel.OnTaskSaved = updatedTask =>
             {
-                // Update the database
+                // Update the existing task with new data
                 using var db = new TodoContext();
-                db.TodoItems.Update(updatedTask);
-                db.SaveChanges();
+                var taskToUpdate = db.TodoItems.FirstOrDefault(t => t.Id == SelectedItem.Id);
+
+                if (taskToUpdate != null)
+                {
+                    taskToUpdate.Title = updatedTask.Title;
+                    taskToUpdate.Description = updatedTask.Description;
+                    taskToUpdate.DueTime = updatedTask.DueTime;
+                    taskToUpdate.NotificationMinutesBefore = updatedTask.NotificationMinutesBefore;
+
+                    db.SaveChanges();
+                }
+                else
+                {
+                    Debug.WriteLine("Task not found in database");
+                }
+
                 LoadTasksForDate();
             };
 

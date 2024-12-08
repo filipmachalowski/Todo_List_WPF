@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Input;
 using Todo_List_WPF.Models;
 using Todo_List_WPF.Views;
@@ -9,7 +10,7 @@ namespace Todo_List_WPF.ViewModels
     {
         private string _title;
         private string _description;
-        private DateTime? _dueTime;
+        private DateTime _dueTime;
         private int _notificationMinutesBefore;
 
         public string Title
@@ -24,10 +25,58 @@ namespace Todo_List_WPF.ViewModels
             set => SetProperty(ref _description, value);
         }
 
-        public DateTime? DueTime
+        public DateTime DueTime
         {
-            get => _dueTime;
-            set => SetProperty(ref _dueTime, value);
+            get => _dueTime == default ? DateTime.Now : _dueTime;
+            set
+            {
+                if (SetProperty(ref _dueTime, value))
+                {
+                    // Recalculate Hour and Minute when DueTime changes
+                    OnPropertyChanged(nameof(Hour));
+                    OnPropertyChanged(nameof(Minute));
+                }
+            }
+        }
+        public int Hour
+        {
+            get => DueTime.Hour;
+            set
+            {
+                Debug.WriteLine("Set");
+                if (value != DueTime.Hour)
+                {
+                    Debug.WriteLine($"Setting Hour to {value}");
+                    DueTime = new DateTime(
+                        DueTime.Year,
+                        DueTime.Month,
+                        DueTime.Day,
+                        value,
+                        DueTime.Minute,
+                        0
+                    );
+                    OnPropertyChanged(nameof(DueTime));
+                }
+            }
+        }
+        public int Minute
+        {
+            get => DueTime.Minute;
+            set
+            {
+                if (value != DueTime.Minute)
+                {
+                    DueTime = new DateTime(
+                        DueTime.Year,
+                        DueTime.Month,
+                        DueTime.Day,
+                        DueTime.Hour,
+                        value,
+                        0
+                    );
+                    OnPropertyChanged(nameof(DueTime));
+                }
+            }
         }
 
         public int NotificationMinutesBefore
@@ -43,6 +92,7 @@ namespace Todo_List_WPF.ViewModels
 
         public AddTaskDialogViewModel()
         {
+            DueTime = DateTime.Now;
             SaveCommand = new RelayCommand(SaveTask);
             CancelCommand = new RelayCommand(CancelTask);
         }

@@ -8,7 +8,7 @@
         ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
         ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-        Title="Add/Edit Task" Height="300" Width="400" Icon="/Resources/list.ico">
+        Title="Add/Edit Task" Height="321" Width="400" Icon="/Resources/list.ico">
 
     <!-- Binding the DataContext to the ViewModel -->
     <Window.DataContext>
@@ -24,11 +24,23 @@
             <TextBox Text="{Binding Description}" Margin="5" VerticalAlignment="Center" AcceptsReturn="True"/>
 
             <!-- Due Date -->
-            <ui:CalendarDatePicker Date="{Binding DueTime}" Margin="5" IsTodayHighlighted="True" Width="50"/>
+                <DatePicker SelectedDate="{Binding DueTime}" Margin="5" HorizontalAlignment="Stretch" IsTodayHighlighted="True" Text=""/>
+                <!-- Time Picker for Selecting Hour and Minute -->
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" >
+                    <ui:NumberBox SpinButtonPlacementMode="Hidden" Width="60" Value="{Binding Hour,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Maximum="24" Minimum="0" MaxDecimalPlaces="0" ClearButtonEnabled="False" />
+                    <TextBlock Text=" : " VerticalAlignment="Center" />
+                    <ui:NumberBox SpinButtonPlacementMode="Hidden" Width="60" Value="{Binding Minute,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" MaxDecimalPlaces="0" Maximum="59" Minimum="0" ClearButtonEnabled="False" />
+                </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Margin="5,0,0,0"/>
+                <Label Content="Notify" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </StackPanel>
 
-            <ui:TimePicker/>
             <!-- Notification Time (optional) -->
-            <TextBox Text="{Binding NotificationMinutesBefore}" Margin="5" VerticalAlignment="Center" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding NotificationMinutesBefore}" Margin="5" VerticalAlignment="Center" />
+                <Label Content="Minutes Before" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </StackPanel>
 
             <!-- Buttons for Save and Cancel -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
