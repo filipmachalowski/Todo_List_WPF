@@ -1,6 +1,6 @@
 # Todo_List_WPF
 
-A simple TODO list application built with **C#**, **.NET 8** **MVVM**, **WPF**, **WPF UI** and **SQLite**. This app allows users to manage daily tasks with features such as adding, editing, removing tasks and marking tasks as completed with checkboxes. It also supports notifications for upcoming tasks and allows users to switch between days to view tasks.
+A simple TODO list application built with **C#**, **.NET 8**, **MVVM**, **WPF**, **WPF UI** and **SQLite**. This app allows users to manage daily tasks with features such as adding, editing, removing tasks and marking tasks as completed with checkboxes. It also supports notifications for upcoming tasks and allows users to switch between days to view tasks.
 
 ## Features
 
