@@ -1,8 +1,14 @@
-﻿<Window x:Class="Todo_List_WPF.Views.AddTaskDialog"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:Todo_List_WPF.ViewModels"
-        Title="Add/Edit Task" Height="300" Width="400">
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="Todo_List_WPF.Views.AddTaskDialog"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        Background="{DynamicResource ApplicationBackgroundBrush}"
+        ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+        ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+        Title="Add/Edit Task" Height="300" Width="400" Icon="/Resources/list.ico">
 
     <!-- Binding the DataContext to the ViewModel -->
     <Window.DataContext>
@@ -12,16 +18,17 @@
     <Grid Margin="10">
         <StackPanel>
             <!-- Task Title -->
-            <TextBox Text="{Binding Title}" Margin="5" Height="25" VerticalAlignment="Center" />
+            <TextBox Text="{Binding Title}" Margin="5" VerticalAlignment="Center" />
 
             <!-- Task Description -->
-            <TextBox Text="{Binding Description}" Margin="5" Height="60" VerticalAlignment="Center" AcceptsReturn="True"/>
+            <TextBox Text="{Binding Description}" Margin="5" VerticalAlignment="Center" AcceptsReturn="True"/>
 
             <!-- Due Date -->
-            <DatePicker SelectedDate="{Binding DueTime}" Margin="5" Height="25" VerticalAlignment="Center"/>
+            <ui:CalendarDatePicker Date="{Binding DueTime}" Margin="5" IsTodayHighlighted="True" Width="50"/>
 
+            <ui:TimePicker/>
             <!-- Notification Time (optional) -->
-            <TextBox Text="{Binding NotificationMinutesBefore}" Margin="5" Height="25" VerticalAlignment="Center" />
+            <TextBox Text="{Binding NotificationMinutesBefore}" Margin="5" VerticalAlignment="Center" />
 
             <!-- Buttons for Save and Cancel -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">

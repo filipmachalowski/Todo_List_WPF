@@ -8,8 +8,11 @@
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Icon="pack://application:,,,/Resources/list.ico"
-        Title="TODO List" Height="450" Width="800">
-    
+        ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+        ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+        Title="TODO List" Height="450" Width="800" MinWidth="600" MinHeight="350">
+
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
@@ -17,24 +20,25 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <DatePicker SelectedDate="{Binding SelectedDate}" Grid.Row="0" Margin="5" RenderTransformOrigin="0.429,7.219" />
+        <DatePicker SelectedDate="{Binding SelectedDate}" Margin="0,0,260,0" Grid.Row="0" />
 
-        <ListBox ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Title" Grid.Row="1" Margin="5" />
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,35,0">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
             <Button Content="Add" Command="{Binding AddTaskCommand}" Width="75" Margin="5" />
             <Button Content="Edit" Command="{Binding EditTaskCommand}" Width="75" Margin="5" />
             <Button Content="Remove" Command="{Binding RemoveTaskCommand}" Width="75" Margin="5" />
         </StackPanel>
 
+        <ListBox ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Title" Grid.Row="1" Margin="5" />
 
-        <tray:NotifyIcon Icon="pack://application:,,,/Resources/list.ico"
+
+
+
+         <tray:NotifyIcon Icon="pack://application:,,,/Resources/list.ico"
                          TooltipText="TODO List"
                          LeftClick="OnNotifyIconLeftClick">
-            <!-- Define the tray menu -->
             <tray:NotifyIcon.Menu>
                 <ContextMenu>
                     <MenuItem Header="Show" Click="ShowAppFromTray" />

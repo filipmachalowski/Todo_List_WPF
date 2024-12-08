@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,24 @@ namespace Todo_List_WPF.Views
         public MainView()
         {
             InitializeComponent();
+            Loaded += (sender, args) =>
+            {
+                if (Wpf.Ui.Appearance.ApplicationThemeManager.GetSystemTheme().ToString() == "Dark") {
+                    Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Dark, Wpf.Ui.Controls.WindowBackdropType.Auto, true);
+                }
+                else
+                {
+                    Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Light, Wpf.Ui.Controls.WindowBackdropType.Auto, true);
+                }
+                
+                Wpf.Ui.Appearance.SystemThemeWatcher.Watch(
+                    this,                                    // Window class
+                    Wpf.Ui.Controls.WindowBackdropType.Auto,  // Background type
+                    true                                     // Whether to change accents automatically
+                );
+            };
         }
+
         public void CloseAddTaskDialog()
         {
             foreach (var window in Application.Current.Windows)
