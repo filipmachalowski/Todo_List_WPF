@@ -11,7 +11,12 @@
         ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
         ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-        Title="TODO List" Height="450" Width="800" MinWidth="600" MinHeight="350">
+        Title="TODO List"
+        Height="500"
+        Width="600"
+        MinWidth="600"
+        MinHeight="350"
+        MaxWidth="600">
 
     <Window.DataContext>
         <vm:MainViewModel />
@@ -19,47 +24,113 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <DatePicker SelectedDate="{Binding SelectedDate}" Margin="0,0,260,0" Grid.Row="0" />
+        <DatePicker SelectedDate="{Binding SelectedDate}"
+                    Margin="0,0,260,0"
+                    Grid.Row="0" />
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
-            <Button Content="Add" Command="{Binding AddTaskCommand}" Width="75" Margin="5" />
-            <Button Content="Edit" Command="{Binding EditTaskCommand}" Width="75" Margin="5" />
-            <Button Content="Remove" Command="{Binding RemoveTaskCommand}" Width="75" Margin="5" />
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Grid.Row="0">
+            <Button Content="Add"
+                    Command="{Binding AddTaskCommand}"
+                    Width="75"
+                    Margin="5" />
+            <Button Content="Edit"
+                    Command="{Binding EditTaskCommand}"
+                    Width="75"
+                    Margin="5" />
+            <Button Content="Remove"
+                    Command="{Binding RemoveTaskCommand}"
+                    Width="75"
+                    Margin="5" />
         </StackPanel>
 
-        <ListBox ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedItem}" Grid.Row="1" Margin="5">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <CheckBox 
-                            IsChecked="{Binding IsCompleted, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" 
-                            VerticalAlignment="Center" 
-                            Margin="5"
-                            Checked="OnTaskCompletionChanged"
-                            Unchecked="OnTaskCompletionChanged"/>
-                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="5" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid Grid.Row="1"
+              Margin="5">
+            <!-- Message for Empty List -->
+            <TextBlock Text="You have no tasks for selected day"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontSize="16"
+                       Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility"
+                                Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Tasks.Count}"
+                                         Value="0">
+                                <Setter Property="Visibility"
+                                        Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <!-- List of Tasks -->
+            <ListBox ItemsSource="{Binding Tasks}"
+                     SelectedItem="{Binding SelectedItem}"
+                     Margin="5">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="5">
+                            <!-- CheckBox -->
+                            <CheckBox IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      VerticalAlignment="Top"
+                                      Margin="5"
+                                      Checked="OnTaskCompletionChanged"
+                                      Unchecked="OnTaskCompletionChanged" />
+
+                            <!-- Title and Description -->
+                            <StackPanel Margin="5,0,0,0">
+                                <!-- Task Title -->
+                                <TextBlock Text="{Binding Title}"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="14"
+                                           TextTrimming="CharacterEllipsis"
+                                           MaxWidth="460"
+                                           Margin="0,0,0,2" />
+
+                                <!-- Task Description -->
+                                <TextBlock Text="{Binding Description}"
+                                           FontSize="12"
+                                           TextTrimming="CharacterEllipsis"
+                                           TextWrapping="WrapWithOverflow"
+                                           MaxHeight="30"
+                                           MaxWidth="460" />
+                                <TextBlock Text="{Binding DueTime}"
+                                           FontSize="12"
+                                           TextTrimming="CharacterEllipsis"
+                                           TextWrapping="WrapWithOverflow"
+                                           MaxHeight="30"
+                                           MaxWidth="460" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Grid>
 
         <tray:NotifyIcon Icon="pack://application:,,,/Resources/list.ico"
                          TooltipText="TODO List"
                          LeftClick="OnNotifyIconLeftClick">
             <tray:NotifyIcon.Menu>
                 <ContextMenu>
-                    <MenuItem Header="Show" Click="ShowAppFromTray" />
+                    <MenuItem Header="Show"
+                              Click="ShowAppFromTray" />
                     <Separator />
-                    <MenuItem Header="Exit" Click="ExitApp" />
+                    <MenuItem Header="Exit"
+                              Click="ExitApp" />
                 </ContextMenu>
             </tray:NotifyIcon.Menu>
         </tray:NotifyIcon>
-
-
-
     </Grid>
 </Window>

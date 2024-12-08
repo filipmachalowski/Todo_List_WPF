@@ -46,9 +46,17 @@ namespace Todo_List_WPF.ViewModels
         {
             using var db = new TodoContext();
             Tasks.Clear();
-            var tasksForDate = db.TodoItems.Where(t => t.DueTime.Date == SelectedDate.Date).ToList();
+
+            // Fetch and order tasks by DueTime (closest to furthest)
+            var tasksForDate = db.TodoItems
+                                 .Where(t => t.DueTime.Date == SelectedDate.Date)
+                                 .OrderBy(t => t.DueTime)  // Order by DueTime (closest first)
+                                 .ToList();
+
             foreach (var task in tasksForDate)
+            {
                 Tasks.Add(task);
+            }
         }
 
         private void AddTask()

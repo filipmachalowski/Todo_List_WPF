@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 using Todo_List_WPF.Models;
 using Todo_List_WPF.Views;
@@ -134,6 +135,18 @@ namespace Todo_List_WPF.ViewModels
 
         private void SaveTask()
         {
+            // Check if Title or Description is empty
+            if (string.IsNullOrWhiteSpace(Title))
+            {
+                MessageBox.Show("Title cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                MessageBox.Show("Description cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             var newTask = new TodoItem
             {
                 Title = Title,
